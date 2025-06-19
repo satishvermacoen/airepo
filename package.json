@@ -1,0 +1,39 @@
+{
+  "name": "gym-backend-main",
+  "version": "1.0.0",
+  "description": "gym ERP main backend source code dev_1",
+  "keywords": [
+    "javascript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://simplertechnologies-prod@dev.azure.com/simplertechnologies-prod/gym-backend-main/_git/gym-backend-main"
+  },
+  "license": "ISC",
+  "author": "Satish Verma",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon -r dotenv/config --experimental-json-modules src/index.js",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cloudinary": "^2.6.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.16.0",
+    "mongoose": "^8.15.1",
+    "mongoose-aggregate-paginate-v2": "^1.1.4",
+    "multer": "^2.0.1",
+    "multer-azure-blob-storage": "^1.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10",
+    "prettier": "^3.5.3"
+  }
+}
