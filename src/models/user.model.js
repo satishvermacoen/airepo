@@ -1,30 +1,30 @@
 import mongoose, {Schema} from "mongoose";
-import { MongoClient } from "mongodb";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 
 const userSchema = new Schema(
+    
     {
         username: {
-            type :String,
+            type: String,
             required: true,
             unique: true,
             lowercase: true,
-            trim: true, 
+            trim: true,
             index: true
         },
         email: {
             type: String,
             required: true,
             unique: true,
-            lowecase: true,
-            trim: true, 
+            lowercase: true,
+            trim: true,
         },
         fullName: {
             type: String,
             required: true,
-            trim: true, 
+            trim: true,
             index: true
         },
         avatar: {
@@ -34,12 +34,17 @@ const userSchema = new Schema(
         coverImage: {
             type: String, // cloudinary url
         },
-        watchHistory: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: "Video"
-            }
-        ],
+        // Role definition for the user
+        role: {
+            type: String,
+            enum: ['member', 'employee', 'owner'],
+            default: 'member'
+        },
+        // Link to the user's specific subscription details
+        userSubscription: {
+            type: Schema.Types.ObjectId,
+            ref: "UserSubscription"
+        },
         password: {
             type: String,
             required: [true, 'Password is required']
@@ -47,7 +52,6 @@ const userSchema = new Schema(
         refreshToken: {
             type: String
         }
-
     },
     {
         timestamps: true
@@ -67,7 +71,7 @@ userSchema.methods.isPasswordCorrect = async function(password) {
 };
 
 userSchema.methods.generateAccessToken = function(){
-    jwt.sign({
+    return jwt.sign({
         _id: this._id,
         email:this.email,
         username: this.username,
