@@ -3,6 +3,23 @@ import { ApiError } from "../../utils/ApiError.js";
 import { User } from "../../models/user.model.js";
 import { uploadOnCloudinary } from "../../utils/cloudinary.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
+import jwt from "jsonwebtoken";
+
+const generateAccessAndRefereshTokens = async(userId) => {
+    try {
+        const user = await User.findById(userId)
+        const accessToken = user.generateAccessToken()
+        const refreshToken = user.generateRrefreshToken()
+
+        user.refreshToken = refreshToken
+        await user.save({ validateBeforeSave: false })
+
+        return {accessToken, refreshToken}
+
+    } catch (error) {
+        throw new ApiError(500, "Something went wrong while generating refresh and access token")
+    }
+}
 
 const registerUser = asyncHandler( async(req, res) => {
     // get user details from frontend
@@ -192,6 +209,11 @@ const refreshAccessToken = asyncHandler(async(req, res) => {
 
             const{accessToken, newRefreshToken} = await generateAccessAndRefereshTokens(user._id)
 
+            const options = {
+                httpOnly: true,
+                secure: true
+            }
+
             return res
             .status(200)
             .cookie("accessToken", accessToken, options)
@@ -336,5 +358,9 @@ export {
    loginUser,
    logoutUser,
    refreshAccessToken,
-   changeCurrentPassword
+   changeCurrentPassword,
+   getCurrentUser,
+   updateAccountDetails,
+   updateUserAvatar,
+   updateUserCoverImage
 }
