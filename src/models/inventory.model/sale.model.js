@@ -12,15 +12,14 @@ const saleSchema = new Schema(
             trim: true,
         },
         // The user (member) who made the purchase
-        userId: {
+        customer: {
             type: Schema.Types.ObjectId,
             ref: "User",
-            required: true,
         },
         // The employee who processed the sale
-        employeeId: {
+        processedBy: {
             type: Schema.Types.ObjectId,
-            ref: "User", // or "Employee" if you want to be more specific
+            ref: "User",
             required: true,
         },
         branchId: {
@@ -28,9 +27,9 @@ const saleSchema = new Schema(
             ref: "GymBranch",
             required: true,
         },
-        itemsSold: [
+        items: [
             {
-                itemId: {
+                item: {
                     type: Schema.Types.ObjectId,
                     ref: "InventoryItem",
                     required: true,
@@ -40,7 +39,7 @@ const saleSchema = new Schema(
                     required: true,
                     min: 1,
                 },
-                pricePerItem: {
+                unitPrice: {
                     type: Number,
                     required: true,
                 },

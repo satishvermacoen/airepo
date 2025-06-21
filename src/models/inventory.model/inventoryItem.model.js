@@ -6,7 +6,7 @@ import mongoose, { Schema } from "mongoose";
  */
 const inventoryItemSchema = new Schema(
     {
-        itemName: {
+        name: {
             type: String,
             required: true,
             trim: true,
@@ -33,8 +33,12 @@ const inventoryItemSchema = new Schema(
             type: Number,
             required: true,
         },
+        description: {
+            type: String,
+            trim: true,
+        },
         // Link to the supplier of this item
-        supplierId: {
+        supplier: {
             type: Schema.Types.ObjectId,
             ref: "Supplier",
         },
@@ -44,7 +48,7 @@ const inventoryItemSchema = new Schema(
             ref: "GymBranch",
             required: true,
         },
-        lowStockThreshold: {
+        reorderLevel: {
             type: Number,
             default: 10,
             comment: "Threshold at which to reorder the item."

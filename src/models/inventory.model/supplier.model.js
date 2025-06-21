@@ -6,7 +6,7 @@ import mongoose, { Schema } from "mongoose";
  */
 const supplierSchema = new Schema(
     {
-        supplierName: {
+        name: {
             type: String,
             required: true,
             trim: true,
@@ -29,10 +29,13 @@ const supplierSchema = new Schema(
             trim: true,
         },
         address: {
-            street: { type: String, trim: true },
-            city: { type: String, trim: true },
-            state: { type: String, trim: true },
-            pincode: { type: String, trim: true },
+            type: String,
+            trim: true,
+        },
+        status: {
+            type: String,
+            enum: ['active', 'inactive'],
+            default: 'active',
         },
         // Link to the gym branch this supplier is associated with
         branchId: {

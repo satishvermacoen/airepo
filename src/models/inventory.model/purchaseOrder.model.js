@@ -11,7 +11,7 @@ const purchaseOrderSchema = new Schema(
             unique: true,
             trim: true,
         },
-        supplierId: {
+        supplier: {
             type: Schema.Types.ObjectId,
             ref: "Supplier",
             required: true,
@@ -23,17 +23,17 @@ const purchaseOrderSchema = new Schema(
         },
         items: [
             {
-                itemId: {
+                item: {
                     type: Schema.Types.ObjectId,
                     ref: "InventoryItem",
                     required: true,
                 },
-                quantityOrdered: {
+                quantity: {
                     type: Number,
                     required: true,
                     min: 1,
                 },
-                costPerItem: {
+                unitPrice: {
                     type: Number,
                     required: true,
                 },
@@ -53,8 +53,11 @@ const purchaseOrderSchema = new Schema(
         status: {
             type: String,
             required: true,
-            enum: ['Pending', 'Shipped', 'Received', 'Cancelled'],
-            default: 'Pending',
+            enum: ['pending', 'confirmed', 'shipped', 'delivered', 'cancelled'],
+            default: 'pending',
+        },
+        deliveredAt: {
+            type: Date,
         },
     },
     {
